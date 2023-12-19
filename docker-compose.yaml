@@ -1,0 +1,41 @@
+---
+version: "3.9"
+services:
+  taky-cot:
+    image: taky:latest
+    build:
+      args:
+        PGID: 1000
+        PUID: 1000
+    container_name: taky-cot
+    hostname: taky-cot
+    restart: unless-stopped
+    init: true
+    ports:
+      - "8087:8087"
+      - "8089:8089"
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/opt/taky:/etc/taky"
+      - "/opt/taky/var:/var/taky"
+      - "/var/log/taky:/var/log/cot"
+    command: taky -c /etc/taky/taky.conf -d -l debug
+
+  taky-dps:
+    image: taky:latest
+    build:
+      args:
+        PGID: 1000
+        PUID: 1000
+    container_name: taky-dps
+    hostname: taky-dps
+    restart: unless-stopped
+    init: true
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/opt/taky:/etc/taky"
+      - "/opt/taky/var:/var/taky"
+    command: taky_dps -c /etc/taky/taky.conf -l debug
