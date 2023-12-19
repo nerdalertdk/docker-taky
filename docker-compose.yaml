@@ -2,7 +2,7 @@
 version: "3.9"
 services:
   taky-cot:
-    image: taky:latest
+    image: ghcr.io/nerdalertdk/docker-taky:latest
     build:
       args:
         PGID: 999
@@ -22,7 +22,7 @@ services:
     command: taky -c /etc/taky/taky.conf -d -l debug
 
   taky-dps:
-    image: taky:latest
+    image: ghcr.io/nerdalertdk/docker-taky:latest
     build:
       args:
         PGID: 999
